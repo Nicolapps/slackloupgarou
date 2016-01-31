@@ -20,8 +20,8 @@ class SetOptionCommand extends Command
         $client = $this->client;
 
         $help_msg =  "Options\r\n------------------------\r\n";
-        $help_msg .= "To set an option use !setOption Name Value.  The valid names and values are provided below for each option. The current value is indicated in parenthesis.\r\n";
-        $help_msg .= "Available Options\r\n------------------------\r\n";
+        $help_msg .= "Pour activer une option, tapez !setOption <nom> <valeur>. Voici les noms et valeurs disponibles sont spécifiées plus bas (la valeur entre parenthèses est la valeur actuelle) :.\r\n";
+        $help_msg .= "Options disponibles\r\n------------------------\r\n";
         foreach($this->gameManager->optionsManager->options as $curOption)
         {
             /** @var Slackwolf\Game\Option $curOption */
