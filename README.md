@@ -1,31 +1,31 @@
-# Slackwolf
-Slackwolf is a bot for Slack. After inviting the bot to a channel, you can play the timeless game of [Werewolf (also called Mafia)](https://en.wikipedia.org/wiki/Mafia_(party_game)).
+# SlackLoupGarou
+SlackLoupGarou est un bot pour Slack. Après avoir invité le bot sur votre channel, vous pouvez jouer aux [Loups-Garous de Thiercelieux](https://fr.wikipedia.org/wiki/Les_Loups-garous_de_Thiercelieux).
 
 ![ProjectImage](http://i.imgur.com/0Kwd8oe.png)
 
-## Roles
-Slackwolf currently supports Seer, Bodyguard, Lycan, Tanner, Beholder, Villager, and Werewolf. You'll need at least a 6 player game in order to see roles other than Seer/Villager/Werewolf given out.
+## Rôles
+SlackLoupGarou supporte actuellement la Voyante, le Salvateur, le Simple-Villageois, le Chien (apparaît à la Voyante comme étant un Villageois), le Spectateur (connaît l'identité de la Voyante) et le Tanneur (s'il se fait tuer, il gagne seul). Vous devez être minimum six joueurs pour pouvoir jouer avec des rôles autres que les Loups-Garous/la Voyante/les Simple-Villageois.
 
-## How to play
-`/invite` the bot and type !help
+## Comment jouer
+`/invite` le robot et tapez /help
 
 ## Installation
-Slackwolf requires PHP 5.5+ and [Composer](https://getcomposer.org/). It may not work with PHP7 due to one of its dependencies.
+SlackLoupgarou requit PHP 5.5+ et [Composer](https://getcomposer.org/). Il ne fonctionne **pas** avec PHP7 à cause d'une de ses dépendances.
 
 ```
-git clone http://github.com/chrisgillis/slackwolf
-cd slackwolf
+git clone https://github.com/Nicolapps/slackloupgarou
+cd slackloupgarou
 composer install
 ```
 
-Edit the `.env` file with a valid real-time messaging bot token from Slack. Get a valid token from the "Custom Integrations" tab of your Slack "Configure Apps" page. Also be sure to put the correct bot name in the `.env` file as well.
+Modifiez le fichier `.env` avec un token de bot de Slack. Obtenez-en un en allant sur l'onglet "Custom Integrations" de la page "Configure Apps" de Slack. Assurez-vous également que le nom du bot corresponde au fichier `.env`.
 
-To start the bot type `php bot.php`
+Pour démarrer le bot, tapez `php bot.php`
 
-## Contributing
+## Créateurs
 
-Send in pull requests. I wrote this very quickly and it could use some major refactoring of its components. It also needs a lot more roles.
+Le bot a été écrit par @chrisgillis et traduit en français par @nicolapps. Pour modifier le code du bot, envoyez une Pull Request sur [le projet original](https://github.com/chrisgillis/slackwolf).
 
 ## License
 
-MIT License.
+License MIT
