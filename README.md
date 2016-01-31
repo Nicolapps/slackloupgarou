@@ -1,7 +1,7 @@
 # SlackLoupGarou
 SlackLoupGarou est un bot pour Slack. Après avoir invité le bot sur votre channel, vous pouvez jouer aux [Loups-Garous de Thiercelieux](https://fr.wikipedia.org/wiki/Les_Loups-garous_de_Thiercelieux).
 
-![ProjectImage](http://i.imgur.com/0Kwd8oe.png)
+![Un max de fun ! :P](http://cdn.nicolapps.ch/images/uploads/1454241003.png)
 
 ## Rôles
 SlackLoupGarou supporte actuellement la Voyante, le Salvateur, le Simple-Villageois, le Chien (apparaît à la Voyante comme étant un Villageois), le Spectateur (connaît l'identité de la Voyante) et le Tanneur (s'il se fait tuer, il gagne seul). Vous devez être minimum six joueurs pour pouvoir jouer avec des rôles autres que les Loups-Garous/la Voyante/les Simple-Villageois.
