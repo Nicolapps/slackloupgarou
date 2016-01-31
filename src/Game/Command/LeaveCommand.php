@@ -13,17 +13,17 @@ class LeaveCommand extends Command
     public function init()
     {
         if ($this->channel[0] == 'D') {
-            throw new Exception("Can't leave a game or lobby by direct message.");
+            throw new Exception("Impossible de quitter une partie ou un lobby par message privé.");
         }
 
         $this->game = $this->gameManager->getGame($this->channel);
 
         if ( ! $this->game) {
-            throw new Exception("No game in progress.");
+            throw new Exception("Aucun jeu en cours");
         }
         
         if ($this->game->getState() != GameState::LOBBY) { 
-            throw new Exception("Game in progress is not in lobby state.");
+            throw new Exception("Le jeu actuel n'est pas ou plus un lobby.");
         }
     }
 
@@ -32,6 +32,6 @@ class LeaveCommand extends Command
         $this->game->removeLobbyPlayer($this->userId);
             
         $playersList = PlayerListFormatter::format($this->game->getLobbyPlayers());
-        $this->gameManager->sendMessageToChannel($this->game, "Current lobby: ".$playersList);    
+        $this->gameManager->sendMessageToChannel($this->game, "Lobby actuel : ".$playersList);    
     }
 }
