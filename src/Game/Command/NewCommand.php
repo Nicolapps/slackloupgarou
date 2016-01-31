@@ -12,7 +12,7 @@ class NewCommand extends Command
     public function init()
     {
         if ($this->channel[0] == 'D') {
-            throw new Exception("Can't initiate a new game lobby by direct message.");
+            throw new Exception("Impossible de créer un nouveau lobby par message privé.");
         }
     }
 
@@ -28,10 +28,10 @@ class NewCommand extends Command
             $this->client->getChannelGroupOrDMByID($this->channel)->then(function (ChannelInterface $channel) use ($client, $gameManager) {
                 $game = $gameManager->getGame($this->channel);
                 if ($game->getState == GameState::LOBBY) {
-                    $client->send('A game lobby is already open.  Type !join to play the next game.', $channel);
+                    $client->send('Un lobby est déjà créé. Tapez !join pour rejoindre la prochaine partie.', $channel);
                 }
                 else {
-                    $client->send('A game is already in progress.', $channel);
+                    $client->send('Un jeu est déjà en cours.', $channel);
                 }
             });
 
@@ -41,7 +41,7 @@ class NewCommand extends Command
         try {
             $gameManager->newGame($message->getChannel(), [], new RoleStrategy\Classic());        
             $game = $gameManager->getGame($message->getChannel());
-            $this->gameManager->sendMessageToChannel($game, "A new game lobby has been created.  Type !join to play the next game.");
+            $this->gameManager->sendMessageToChannel($game, "Un lobby a été créé. Tapez !join pour rejoindre la prochaine partie.");
             $userId = $this->userId;
 
             $this->client->getChannelGroupOrDMByID($this->channel)
@@ -57,7 +57,7 @@ class NewCommand extends Command
                 });
 
             $playersList = PlayerListFormatter::format($game->getLobbyPlayers());
-            $this->gameManager->sendMessageToChannel($game, "Current lobby: ".$playersList);
+            $this->gameManager->sendMessageToChannel($game, "Lobby actuel : ".$playersList);
         } catch (Exception $e) {
             $this->client->getChannelGroupOrDMByID($this->channel)->then(function (ChannelInterface $channel) use ($client,$e) {
                 $client->send($e->getMessage(), $channel);
