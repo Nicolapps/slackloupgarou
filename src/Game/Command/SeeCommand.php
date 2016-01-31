@@ -33,14 +33,14 @@ class SeeCommand extends Command
         $client = $this->client;
 
         if ($this->channel[0] != 'D') {
-            throw new Exception("You may only !see from a DM.");
+            throw new Exception("Vous pouvez uniquement !see par message privé.");
         }
 
         if (count($this->args) < 2) {
             $this->client->getDMById($this->channel)
                          ->then(
                              function (DirectMessageChannel $dmc) use ($client) {
-                                 $this->client->send(":warning: Not enough arguments. Usage: !see #channel @user", $dmc);
+                                 $this->client->send(":warning: Pas assez d'arguments. Utilisation : !see #channel @joueur", $dmc);
                              }
                          );
 
@@ -88,7 +88,7 @@ class SeeCommand extends Command
             $this->client->getDMById($this->channel)
                          ->then(
                              function (DirectMessageChannel $dmc) use ($client) {
-                                 $this->client->send(":warning: Invalid channel specified. Usage: !see #channel @user", $dmc);
+                                 $this->client->send(":warning: Channel invalide. Utilisation : !see #channel @joueur", $dmc);
                              }
                          );
             throw new InvalidArgumentException();
@@ -101,7 +101,7 @@ class SeeCommand extends Command
             $this->client->getDMById($this->channel)
                          ->then(
                              function (DirectMessageChannel $dmc) use ($client) {
-                                 $this->client->send(":warning: Could not find a running game on the specified channel.", $dmc);
+                                 $this->client->send(":warning: Impossible de trouver une partie en cours sur le channel spécifié", $dmc);
                              }
                          );
 
@@ -117,7 +117,7 @@ class SeeCommand extends Command
             $this->client->getDMById($this->channel)
                  ->then(
                      function (DirectMessageChannel $dmc) use ($client) {
-                         $this->client->send(":warning: Could not find you in the game you specified.", $dmc);
+                         $this->client->send(":warning: Vous n'êtes pas dans la partie spécifiée.", $dmc);
                      }
                  );
 
@@ -128,19 +128,19 @@ class SeeCommand extends Command
         if ( ! $this->game->isPlayerAlive($this->userId)) {
             $client->getChannelGroupOrDMByID($this->channel)
                 ->then(function (ChannelInterface $channel) use ($client) {
-                    $client->send(":warning: You aren't alive in the specified channel.", $channel);
+                    $client->send(":warning: Vous n'êtes pas vivant dans la partie spécifiée.", $channel);
                 });
-            throw new Exception("Can't See if dead.");
+            throw new Exception("Impossible de sonder en étant mort.");
         }
 
         if ($player->role != Role::SEER) {
             $this->client->getDMById($this->channel)
                  ->then(
                      function (DirectMessageChannel $dmc) use ($client) {
-                         $this->client->send(":warning: You aren't a seer in the specified game.", $dmc);
+                         $this->client->send(":warning: Vous n'êtes pas la Voyante dans la partie spécifiée.", $dmc);
                      }
                  );
-            throw new Exception("Player is not the seer but is trying to see.");
+            throw new Exception("Le joueur n'est pas la Voyante mais essaie de sonder.");
         }
 
         if (! in_array($this->game->getState(), [GameState::FIRST_NIGHT, GameState::NIGHT])) {
@@ -151,10 +151,10 @@ class SeeCommand extends Command
             $this->client->getDMById($this->channel)
                  ->then(
                      function (DirectMessageChannel $dmc) use ($client) {
-                         $this->client->send(":warning: You may only see once each night.", $dmc);
+                         $this->client->send(":warning: Vous ne pouvez sonder un joueur qu'une seule fois par nuit.", $dmc);
                      }
                  );
-            throw new Exception("You may only see once each night.");
+            throw new Exception("Vous ne pouvez sonder un joueur qu'une seule fois par nuit.");
         }
     }
 
@@ -168,9 +168,9 @@ class SeeCommand extends Command
             }
 
             if ($player->role == Role::WEREWOLF || $player->role == Role::LYCAN) {
-                $msg = "@{$player->getUsername()} is on the side of the Werewolves.";
+                $msg = "@{$player->getUsername()} est dans le camp des Loups-Garous.";
             } else {
-                $msg = "@{$player->getUsername()} is on the side of the Villagers.";
+                $msg = "@{$player->getUsername()} est dans le camp des Villageois.";
             }
 
             $this->client->getDMById($this->channel)
@@ -190,7 +190,7 @@ class SeeCommand extends Command
         $this->client->getDMById($this->channel)
              ->then(
                  function (DirectMessageChannel $dmc) use ($client) {
-                     $this->client->send("Could not find the user you asked for.", $dmc);
+                     $this->client->send("Impossible de trouver le joueur que vous avez demandé.", $dmc);
                  }
              );
     }
