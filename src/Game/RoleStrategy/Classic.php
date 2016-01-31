@@ -33,7 +33,7 @@ class Classic implements RoleStrategyInterface
             Role::VILLAGER => max($num_good - $num_seer, 0)
         ];
         
-        $this->roleListMsg = "Required: [".($num_seer > 0 ? "Seer, " : "")."Werewolf, Villager]";
+        $this->roleListMsg = "Obligatoire: [".($num_seer > 0 ? "Voyante, " : "")."Loup-Garous, Villageois]";
 
         $possibleOptionalRoles = [Role::VILLAGER];
         $optionalRoleListMsg = "";
@@ -41,23 +41,23 @@ class Classic implements RoleStrategyInterface
             if ($optionsManager->getOptionValue(OptionName::role_tanner)){
                 $optionalRoles[Role::TANNER] = 1;
                 $possibleOptionalRoles[] = Role::TANNER;
-                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Tanner";
+                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Tanneur";
             }
             if ($optionsManager->getOptionValue(OptionName::role_lycan)){
                 $optionalRoles[Role::LYCAN] = 1;
                 $possibleOptionalRoles[] = Role::LYCAN;
-                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Lycan";
+                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Chien";
             }
             if ($num_seer > 0 
                 && $optionsManager->getOptionValue(OptionName::role_beholder)){
                 $optionalRoles[Role::BEHOLDER] = 1;
                 $possibleOptionalRoles[] = Role::BEHOLDER;
-                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Beholder";
+                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Spectateur";
             }
             if ($optionsManager->getOptionValue(OptionName::role_bodyguard)){
                 $optionalRoles[Role::BODYGUARD] = 1;
                 $possibleOptionalRoles[] = Role::BODYGUARD;
-                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Bodyguard";
+                $optionalRoleListMsg .= (strlen($optionalRoleListMsg) > 0 ? ", " : "")."Salvateur";
             }
         }
 
