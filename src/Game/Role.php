@@ -2,11 +2,11 @@
 
 class Role
 {
-    const VILLAGER = "Villager";
-    const SEER = "Seer";
-    const WEREWOLF = "Werewolf";
-    const BODYGUARD = "Bodyguard";
-    const TANNER = "Tanner";
-    const LYCAN = "Lycan";
-    const BEHOLDER = "Beholder";
+    const VILLAGER = "Villageois";
+    const SEER = "Voyante";
+    const WEREWOLF = "Loup-Garou";
+    const BODYGUARD = "Salvateur";
+    const TANNER = "Tanneur";
+    const LYCAN = "Chien";
+    const BEHOLDER = "Spectateur";
 }
