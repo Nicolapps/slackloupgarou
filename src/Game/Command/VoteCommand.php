@@ -12,26 +12,26 @@ class VoteCommand extends Command
     public function init()
     {
         if ($this->channel[0] == 'D') {
-            throw new Exception("You may not !vote privately.");
+            throw new Exception("Vous ne pouvez pas voter par message privé.");
         }
 
         if (count($this->args) < 1) {
-            throw new InvalidArgumentException("Must specify a player");
+            throw new InvalidArgumentException("Vous devez spécifier un joueur");
         }
 
         $this->game = $this->gameManager->getGame($this->channel);
 
         if ( ! $this->game) {
-            throw new Exception("No game in progress.");
+            throw new Exception("Aucun jeu en cours");
         }
 
         if ($this->game->getState() != GameState::DAY) {
-            throw new Exception("Voting occurs only during the day.");
+            throw new Exception("Vous ne pouvez que voter pendant le jour.");
         }
 
         // Voter should be alive
         if ( ! $this->game->isPlayerAlive($this->userId)) {
-            throw new Exception("Can't vote if dead.");
+            throw new Exception("Vous ne pouvez pas voter car vous êtes mort.");
         }
 
         $this->args[0] = UserIdFormatter::format($this->args[0], $this->game->getOriginalPlayers());
@@ -41,7 +41,7 @@ echo $this->args[0];
                 && $this->args[0] != 'noone'
                 && $this->args[0] != 'clear') {
             echo 'not found';
-            throw new Exception("Voted player not found in game.");
+            throw new Exception("Le joueur que vous avez voté n'est pas dans la partie.");
         }
     }
 
