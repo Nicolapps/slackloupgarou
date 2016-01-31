@@ -6,7 +6,7 @@ class VoteSummaryFormatter
 {
     public static function format(Game $game)
     {
-        $msg = ":memo: Town Ballot\r\n--------------------------------------------------------------\r\n";
+        $msg = ":memo: Votes des Villageois\r\n--------------------------------------------------------------\r\n";
 
         foreach ($game->getVotes() as $voteForId => $voters)
         {
@@ -14,9 +14,9 @@ class VoteSummaryFormatter
             $numVoters = count($voters);
 
             if ($voteForId == 'noone'){
-                $msg .= ":peace_symbol: No lynch\t\t | ({$numVoters}) | ";
+                $msg .= ":peace_symbol: Pas de lynchage\t\t | ({$numVoters}) | ";
             } else {
-                $msg .= ":knife: Kill @{$voteForPlayer->getUsername()}\t\t | ({$numVoters}) | ";
+                $msg .= ":knife: Tuer @{$voteForPlayer->getUsername()}\t\t | ({$numVoters}) | ";
             }
             
             $voterNames = [];
@@ -30,7 +30,7 @@ class VoteSummaryFormatter
             $msg .= implode(', ', $voterNames) . "\r\n";
         }
 
-        $msg .= "\r\n--------------------------------------------------------------\r\n:hourglass: Remaining Voters: ";
+        $msg .= "\r\n--------------------------------------------------------------\r\n:hourglass: Personnes n'ayant pas encore voté: ";
 
         $playerNames = [];
 
@@ -44,7 +44,7 @@ class VoteSummaryFormatter
         if (count($playerNames) > 0) {
             $msg .= implode(', ', $playerNames);
         } else {
-            $msg .= "None";
+            $msg .= "Aucune";
         }
 
         $msg .= "\r\n--------------------------------------------------------------\r\n";
