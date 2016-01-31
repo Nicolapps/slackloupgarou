@@ -26,15 +26,15 @@ class KillCommand extends Command
         $client = $this->client;
 
         if ($this->channel[0] != 'D') {
-            throw new Exception("You may only !kill privately.");
+            throw new Exception("Vous devez utiliser la commande !kill par message privé au bot.");
         }
 
         if (count($this->args) < 2) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: Invalid command. Usage: !kill #channel @user", $channel);
+                       $client->send(":warning: Commande invalide. Utilisation: !kill #channel @joueur", $channel);
                    });
-            throw new InvalidArgumentException("Not enough arguments");
+            throw new InvalidArgumentException("Pas assez d'arguments.");
         }
 
         $client = $this->client;
@@ -80,7 +80,7 @@ class KillCommand extends Command
             $this->client->getDMById($this->channel)
                          ->then(
                              function (DirectMessageChannel $dmc) use ($client) {
-                                 $this->client->send(":warning: Invalid channel specified. Usage: !kill #channel @user", $dmc);
+                                 $this->client->send(":warning: Channel spécifié invalide. Utilisation: !kill #channel @joueur", $dmc);
                              }
                          );
             throw new InvalidArgumentException();
@@ -91,9 +91,9 @@ class KillCommand extends Command
         if ( ! $this->game) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: No game in progress.", $channel);
+                       $client->send(":warning: Aucun jeu en cours.", $channel);
                    });
-            throw new Exception("No game in progress.");
+            throw new Exception("Aucun jeu en cours.");
         }
         
         $this->args[1] = UserIdFormatter::format($this->args[1], $this->game->getOriginalPlayers());
@@ -105,35 +105,35 @@ class KillCommand extends Command
         if ($this->game->getWolvesVoted()){
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: Wolves have already voted.", $channel);
+                       $client->send(":warning: Les Loups-Garous ont déjà voté.", $channel);
                    });
-            throw new Exception("Wolves can't vote after voting ends.");
+            throw new Exception("Les Loups-Garous ne peuvent pas voter après la fin du vote.");
         }
 
         if ($this->game->getState() != GameState::NIGHT) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: You can only kill at night.", $channel);
+                       $client->send(":warning: Vous pouvez tuer uniquement pendant la nuit.", $channel);
                    });
-            throw new Exception("Killing occurs only during the night.");
+            throw new Exception("Impossible de tuer en dehors de la nuit.");
         }
 
         // Voter should be alive
         if ( ! $this->game->isPlayerAlive($this->userId)) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: You aren't alive in the specified channel.", $channel);
+                       $client->send(":warning: Vous n'êtes pas vivant dans le channel spécifié.", $channel);
                    });
-            throw new Exception("Can't kill if dead.");
+            throw new Exception("Impossible de tuer en étant mort.");
         }
 
         // Person player is voting for should also be alive
         if ( ! $this->game->isPlayerAlive($this->args[1])) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: Could not find that player.", $channel);
+                       $client->send(":warning: Impossible de trouver ce joueur.", $channel);
                    });
-            throw new Exception("Voted player not found in game.");
+            throw new Exception("Joueur voté pas dans la partie.");
         }
 
         // Person should be werewolf
@@ -142,16 +142,16 @@ class KillCommand extends Command
         if ($player->role != Role::WEREWOLF) {
             $client->getChannelGroupOrDMByID($this->channel)
                    ->then(function (ChannelInterface $channel) use ($client) {
-                       $client->send(":warning: You have to be a werewolf to kill.", $channel);
+                       $client->send(":warning: Vous devez être un Loup-Garou pour tuer.", $channel);
                    });
-            throw new Exception("Only werewolves can kill.");
+            throw new Exception("Seulement les Loups-Garous peuvent tuer");
         }
 
         if ($this->game->hasPlayerVoted($this->userId)) {               
             //If changeVote is not enabled and player has already voted, do not allow another vote
             if (!$this->gameManager->optionsManager->getOptionValue(OptionName::changevote))
             {
-                throw new Exception("Vote change not allowed.");
+                throw new Exception("Changement de vote non autorisé.");
             }
         
             $this->game->clearPlayerVote($this->userId);
@@ -182,7 +182,7 @@ class KillCommand extends Command
             foreach($this->game->getPlayersOfRole(Role::WEREWOLF) as $player) {
                 $client->getDMByUserID($player->getId())
                        ->then(function(DirectMessageChannel $channel) use ($client) {
-                           $client->send(":warning: The werewolves did not unanimously vote on a member of the town. Vote again.",$channel);
+                           $client->send(":warning: Les Loups-Garous n'ont pas voté à l'unanimité sur un Villageois. Merci de voter à nouveau.",$channel);
                        });
             }
             return;
