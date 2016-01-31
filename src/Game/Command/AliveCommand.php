@@ -26,14 +26,14 @@ class AliveCommand extends Command
         if ( ! $this->gameManager->hasGame($this->channel)) {
             $client->getChannelGroupOrDMByID($this->channel)
                ->then(function (ChannelInterface $channel) use ($client) {
-                   $client->send(":warning: No game in progress.", $channel);
+                   $client->send(":warning: Aucun jeu en cours", $channel);
                });
             return;
         }
 
         // build list of players
         $playersList = PlayerListFormatter::format($this->game->getLivingPlayers());
-        $this->gameManager->sendMessageToChannel($this->game, ":ok: Players still alive: ".$playersList);
+        $this->gameManager->sendMessageToChannel($this->game, ":ok: Joueurs encore vivants : ".$playersList);
 
     }
 }
