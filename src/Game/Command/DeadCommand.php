@@ -26,7 +26,7 @@ class DeadCommand extends Command
         if ( ! $this->gameManager->hasGame($this->channel)) {
             $client->getChannelGroupOrDMByID($this->channel)
                ->then(function (ChannelInterface $channel) use ($client) {
-                   $client->send(":warning: No game in progress.", $channel);
+                   $client->send(":warning: Aucun jeu en cours", $channel);
                });
             return;
         }
@@ -35,11 +35,11 @@ class DeadCommand extends Command
         $playersList = PlayerListFormatter::format($this->game->getDeadPlayers());
         if (empty($playersList))
         {
-            $this->gameManager->sendMessageToChannel($this->game, "No one has died yet.");
+            $this->gameManager->sendMessageToChannel($this->game, "Personne n'est encore mort.");
         }
         else
         {
-            $this->gameManager->sendMessageToChannel($this->game, ":angel: Players who have died: ".$playersList);
+            $this->gameManager->sendMessageToChannel($this->game, ":angel: Joueurs morts: ".$playersList);
         }
     }
 }
