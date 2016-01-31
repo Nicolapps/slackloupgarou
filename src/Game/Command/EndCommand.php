@@ -10,7 +10,7 @@ class EndCommand extends Command
     public function init()
     {
         if ($this->channel[0] == 'D') {
-            throw new Exception("Can't start a game by direct message.");
+            throw new Exception("Vous ne pouvez pas lancer une partie par message privé.");
         }
     }
 
@@ -21,7 +21,7 @@ class EndCommand extends Command
         if ( ! $this->gameManager->hasGame($this->channel)) {
             $client->getChannelGroupOrDMByID($this->channel)
                ->then(function (ChannelInterface $channel) use ($client) {
-                   $client->send(":warning: No game in progress.", $channel);
+                   $client->send(":warning: Aucun jeu en cours", $channel);
                });
             return;
         }
