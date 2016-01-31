@@ -10,34 +10,34 @@ class HelpCommand extends Command
     {
         $client = $this->client;
 
-        $help_msg =  "How to Play #Werewolf\r\n------------------------\r\n";
-        $help_msg .= "Werewolf is a party game of social deduction. Players are private messaged their role when the game begins. ";
-        $help_msg .= "If you are a Villager, you must find out who the werewolves are based on their voting and your social deduction skills. ";
-        $help_msg .= "if you are a Werewolf, you must pretend you are not a werewolf by lying as best as you can.\r\n";
-        $help_msg .= "The game takes place over several Days and Nights. Each Day all players vote on a player to lynch. The player with the most votes is lynched. If there is a tie, the tied players are lynched. ";
-        $help_msg .= "Each night, the werewolves will be allowed to vote privately on one player to kill. The decision must be unanimous. If its not, you'll keep voting until it is. The bot will private message you.\r\n";
-        $help_msg .= "The villagers win if they eliminate all the werewolves. The werewolves win if they equal or outnumber the remaining players.\r\n\r\n";
-        $help_msg .= "Special Roles\r\n------------------------\r\n";
-        $help_msg .= " |_ Seer - A villager who, once each night, is allowed to see the role of another player. The bot will private message you.\r\n";
-        $help_msg .= " |_ Tanner - A player not on the side of the villagers or the werewolves who wins if is killed.\r\n";
-        $help_msg .= " |_ Lycan - A villager who appears to the Seer as a Werewolf.\r\n";
-        $help_msg .= " |_ Beholder - A villager who learns who the Seer is on the first night\r\n";
-        $help_msg .= " |_ Bodyguard - A villager who may protect a player from being eliminated once each night, but not the same person two nights in a row.\r\n\r\n";
-        $help_msg .= "Available Commands\r\n------------------------\r\n";
-        $help_msg .= "|_  !new - Create a new lobby for players to !join for the next game\r\n";
-        $help_msg .= "|_  !join - Join the lobby for the next game\r\n";
-        $help_msg .= "|_  !leave - Leave the lobby for the next game\r\n";
-        $help_msg .= "|_  !start - Start the game, when called with no parameters the lobby players are used\r\n";
-        $help_msg .= "|_  !start all - Starts a new game with everyone in the channel participating\r\n";
-        $help_msg .= "|_  !start @user1 @user2 @user3 - Starts a new game with the three specified users participating\r\n";
-        $help_msg .= "|_  !vote @user1|noone|clear - During the day, Vote for a @player, no one (no lynch), or clear your existing vote (changevote option must be enabled).\r\n";
-        $help_msg .= "|_  !see #channel @user1 -  Seer only. As the seer, find out if user is villager or werewolf. #channel is the name of the channel you're playing in\r\n";
-        $help_msg .= "|_  !kill #channel @user1 - Werewolf only. As a werewolf, in a PM to the bot, you can vote to kill a user each night. Must be unanimous amongst all werewolves.\r\n";
-        $help_msg .= "|_  !guard #channel @user1 - Bodyguard only. The bodyguard can protect a player from being eliminated once each night. Cant select the same user two nights in a row.\r\n";
-        $help_msg .= "|_  !end - Cause the game to end prematurely\r\n";
-        $help_msg .= "|_  !setoption - View or change options.  Use without any parameters for help and current values.\r\n";
-        $help_msg .= "|_  !dead - Show dead players\r\n";
-        $help_msg .= "|_  !alive - Show living players\r\n";
+        $help_msg =  "Comment jouer aux Loups-Garous\r\n------------------------\r\n";
+        $help_msg .= "Les Loups-Garous est un jeu de société de déduction. Les joueurs reçoivent au début de la partie leur rôle par message privé. ";
+        $help_msg .= "Si vous êtes Villageois, vous devez trouver qui sont les Loups-Garous en vous basant sur les votes et paroles des autres joueurs. ";
+        $help_msg .= "Si vous êtes Loup-Garou, vous devez vous faire passer pour un honnête Villageois en mentant du mieux que vous pouvez.\r\n";
+        $help_msg .= "La partie se déroule pendant plusieurs jours et nuit. Chaque jour, tous les joueurs votent le joueur à lyncher. Le joueur qui reçoit le plus de votes est lynché. Si il y a une égalité, les joueurs à égalité sont lynchés. ";
+        $help_msg .= "Chaque nuit, les Loups-Garous voteront ensemble le Villageois qu'ils vont dévorer. La décision doit être unanime. Si elle ne l'est pas, les Loups-Garous votent jusqu'à qu'elle le soit.\r\n";
+        $help_msg .= "Les Villageois gagnent si ils éliminent tous les Loups-Garous. Les Loups-Garous gagnent si ils sont autant ou plus nombreux que les Villageois.\r\n\r\n";
+        $help_msg .= "Rôles spéciaux\r\n------------------------\r\n";
+        $help_msg .= " |_ La Voyante - Un Villageois qui peut, chaque nuit, voir le rôle d'un autre joueur.\r\n";
+        $help_msg .= " |_ Le Tanneur - Un joueur ni Villageois ni Loup-Garou qui gagne si il se fait tuer.\r\n";
+        $help_msg .= " |_ Le Chien - Un Villageois qui apparaît à la Voyante comme étant un Loup-Garou.\r\n";
+        $help_msg .= " |_ Le Spectateur - Un Villageois qui apprend qui est la Voyante la première nuit.\r\n";
+        $help_msg .= " |_ Le Salvateur - Un Villageois qui peut protéger chaque nuit un joueur de l'attaque des Loups-Garous. Il peut se protéger lui-même, mais il ne peut pas protéger le même joueur deux nuits de suite.\r\n\r\n";
+        $help_msg .= "Commandes disponibles\r\n------------------------\r\n";
+        $help_msg .= "|_  !new - Créer un nouveau lobby que les joueurs pourront !join pour la prochaine partie.\r\n";
+        $help_msg .= "|_  !join - Rejoindre un lobby pour la prochaine partie.\r\n";
+        $help_msg .= "|_  !leave - Quitter le lobby pour la prochaine partie\r\n";
+        $help_msg .= "|_  !start - Commencer la partie. Si aucun paramètre n'est renseigné, les joueurs dans le lobby sont utilisés.\r\n";
+        $help_msg .= "|_  !start all - Commencer une nouvelle partie avec tous les utilisateurs présents dans le channel.\r\n";
+        $help_msg .= "|_  !start @joueur1 @joueur2 @joueur3 - Commencer une nouvelle partie en spécifiant les joueurs.\r\n";
+        $help_msg .= "|_  !vote @joueur|noone|clear - Pendant le jour, votez pour un @joueur, votez pour personne, ou supprimer votre vote existant (l'option « Changement de vote » doit être activée).\r\n";
+        $help_msg .= "|_  !see #channel @joueur - Pour la Voyante uniquement (à envoyer par message privé au bot). Permet de voir si le @joueur est Villageois ou Loup-Garou. #channel est le nom du channel où vous jouez.\r\n";
+        $help_msg .= "|_  !kill #channel @joueur - Pour les Loups-Garous uniquement (à envoyer par message privé au bot). Prmet de tuer un joueur chaque nuit. Doit être unanime avec tous les autres Loups.\r\n";
+        $help_msg .= "|_  !guard #channel @joueur - Pour le Salvateur uniquement. Le Salvateur peut protéger un joueur de l'attaque des Loups-Garous. Il ne peut pas protéger le même joueur deux nuits de suite.\r\n";
+        $help_msg .= "|_  !end - Terminer la partie immédiatement.\r\n";
+        $help_msg .= "|_  !setoption - Voir ou changer des options. Utilisez sans aucun paramètre pour voir toutes les options disponibles et leurs valeurs actuelles.\r\n";
+        $help_msg .= "|_  !dead - Afficher les joueurs morts.\r\n";
+        $help_msg .= "|_  !alive - Afficher les joueurs vivants\r\n";
 
         $this->client->getDMByUserId($this->userId)->then(function(DirectMessageChannel $dm) use ($client, $help_msg) {
             $client->send($help_msg, $dm);
@@ -46,7 +46,7 @@ class HelpCommand extends Command
         if ($this->channel[0] != 'D') {
             $client->getChannelGroupOrDMByID($this->channel)
                ->then(function (ChannelInterface $channel) use ($client) {
-                   $client->send(":book: Please check your Direct Messages for help text.", $channel);
+                   $client->send(":book: Regardez vos messages privés pour le texte d'aide.", $channel);
                });
         }
     }
