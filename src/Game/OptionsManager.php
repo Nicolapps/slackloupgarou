@@ -5,13 +5,13 @@ use Exception;
 class OptionName
 {
     const changevote = 'changevote';
-    const no_lynch = 'no_lynch';
+    const no_lynch = 'pas_de_lynchage';
     const mods = 'mods';
-    const role_seer = 'role_seer';
-    const role_tanner = 'role_tanner';
-    const role_lycan = 'role_lycan';
-    const role_beholder = 'role_beholder';
-    const role_bodyguard = 'role_bodyguard';
+    const role_seer = 'role_voyante';
+    const role_tanner = 'role_tanneur';
+    const role_lycan = 'role_chien';
+    const role_beholder = 'role_spectateur';
+    const role_bodyguard = 'role_salvateur';
 }
 
 class OptionType
@@ -52,13 +52,13 @@ class OptionsManager
     
     public function __construct()
     {
-        $this->options[] = new Option(OptionName::changevote, OptionType::Bool, "on", "When enabled votes can be changed until the final vote is cast.");
-        $this->options[] = new Option(OptionName::no_lynch, OptionType::Bool, "on", "When enabled townsfolk can vote not to lynch anybody.");
-        $this->options[] = new Option(OptionName::role_seer, OptionType::Bool, "on", "Use Seer role in random games.");
-        $this->options[] = new Option(OptionName::role_tanner, OptionType::Bool, "on", "Use Tanner role in random games.");
-        $this->options[] = new Option(OptionName::role_lycan, OptionType::Bool, "on", "Use Lycan role in random games.");
-        $this->options[] = new Option(OptionName::role_beholder, OptionType::Bool, "on", "Use Beholder role in random games.");
-        $this->options[] = new Option(OptionName::role_bodyguard, OptionType::Bool, "on", "Use Bodyguard role in random games.");
+        $this->options[] = new Option(OptionName::changevote, OptionType::Bool, "on", "Quand activé, les votes peuvent être changés tant que le dernier vote n'a pas été fait.");
+        $this->options[] = new Option(OptionName::no_lynch, OptionType::Bool, "on", "Quand activé, les villageois peuvent voter pour ne tuer personne.");
+        $this->options[] = new Option(OptionName::role_seer, OptionType::Bool, "on", "Utiliser la Voyante dans les parties aléatoires.");
+        $this->options[] = new Option(OptionName::role_tanner, OptionType::Bool, "on", "Utiliser le Tanneur dans les parties aléatoires.");
+        $this->options[] = new Option(OptionName::role_lycan, OptionType::Bool, "on", "Utiliser le Chien dans les parties aléatoires.");
+        $this->options[] = new Option(OptionName::role_beholder, OptionType::Bool, "on", "Utiliser le Spctateur dans les parties aléatoires.");
+        $this->options[] = new Option(OptionName::role_bodyguard, OptionType::Bool, "on", "Utiliser le Salvateur dans les parties aléatoires.");
 
         $this->loadOptions();
     }
