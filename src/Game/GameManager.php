@@ -204,7 +204,7 @@ class GameManager
         $winningTeam = $game->whoWon();
 
         if($winningTeam !== null) {
-            $winMsg = ":clipboard: Résumé des rôles\r\n--------------------------------------------------------------\r\n{$playerList}\r\n\r\n:tada: The game is over. The ";
+            $winMsg = ":clipboard: Résumé des rôles\r\n--------------------------------------------------------------\r\n{$playerList}\r\n\r\n:tada: La partie est terminée !.  ";
             if ($winningTeam == Role::VILLAGER) {
                 $winMsg .= "Les Villageois ont gagné !";
             }
@@ -297,9 +297,9 @@ class GameManager
 
         $lynchMsg = "\r\n";
         if (count($players_to_be_lynched) == 0){
-            $lynchMsg .= ":peace_symbol: The townsfolk decided not to lynch anybody today.";
+            $lynchMsg .= ":peace_symbol: Les Villageois ont choisi de ne tuer personne aujourd'hui.";
         }else {
-            $lynchMsg .= ":newspaper: With pitchforks in hand, the townsfolk killed: ";
+            $lynchMsg .= ":newspaper: Avec leurs fourches, les Villageois ont tué : ";
 
             $lynchedNames = [];
             foreach ($players_to_be_lynched as $player_id) {
