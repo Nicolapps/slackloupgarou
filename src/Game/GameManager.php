@@ -183,7 +183,7 @@ class GameManager
         if (!$this->hasGame($id)) { return; }
         $users = $game->getLobbyPlayers();
         if(count($users) < 3) {
-            $this->sendMessageToChannel($game, "Cannot start a game with less than 3 players.");
+            $this->sendMessageToChannel($game, "Impossible de démarrer une partie avec moins de trois joueurs.");
             return;
         }
         $game->assignRoles();
@@ -204,18 +204,18 @@ class GameManager
         $winningTeam = $game->whoWon();
 
         if($winningTeam !== null) {
-            $winMsg = ":clipboard: Role Summary\r\n--------------------------------------------------------------\r\n{$playerList}\r\n\r\n:tada: The game is over. The ";
+            $winMsg = ":clipboard: Résumé des rôles\r\n--------------------------------------------------------------\r\n{$playerList}\r\n\r\n:tada: The game is over. The ";
             if ($winningTeam == Role::VILLAGER) {
-                $winMsg .= "Townsfolk are victorious!";
+                $winMsg .= "Les Villageois ont gagné !";
             }
             elseif ($winningTeam == Role::WEREWOLF) {
-                $winMsg .= "Werewolves are victorious!";
+                $winMsg .= "Les Loups-Garous ont gagné !";
             }
             elseif ($winningTeam == Role::TANNER) {
-                $winMsg .= "Tanner is victorious!";
+                $winMsg .= "Le Tanneur a gagné !";
             }
             else {
-                $winMsg .= "UnknownTeam is victorious!";
+                $winMsg .= "Une équipe inconnue a gagné !";
             }
             $this->sendMessageToChannel($game, $winMsg);
         }
@@ -223,13 +223,13 @@ class GameManager
         if ($enderUserId !== null) {
             $client->getUserById($enderUserId)
                    ->then(function (\Slack\User $user) use ($game, $playerList) {
-                       $gameMsg = ":triangular_flag_on_post: The ";
+                       $gameMsg = ":triangular_flag_on_post: ";
                        $roleSummary = "";
                        if($game->getState() != GameState::LOBBY) {
-                           $gameMsg .= "game was ended";
-                           $roleSummary .= "\r\n\r\nRole Summary:\r\n----------------\r\n{$playerList}";
+                           $gameMsg .= "La partie a été terminée";
+                           $roleSummary .= "\r\n\r\nRésumé des rôles:\r\n----------------\r\n{$playerList}";
                        } else {
-                           $gameMsg .= "lobby was closed";
+                           $gameMsg .= "Le lobby a été fermé";
                        }
                        $this->sendMessageToChannel($game, $gameMsg." by @{$user->getUsername()}.".$roleSummary);
                    });
@@ -254,7 +254,7 @@ class GameManager
             //If changeVote is not enabled and player has already voted, do not allow another vote
             if (!$this->optionsManager->getOptionValue(OptionName::changevote))
             {
-                throw new Exception("Vote change not allowed.");
+                throw new Exception("Le changement de vote n'est pas autorisé.");
             }
             $game->clearPlayerVote($voterId);
         }
@@ -328,26 +328,26 @@ class GameManager
         foreach ($game->getLivingPlayers() as $player) {
             $client->getDMByUserId($player->getId())
                 ->then(function (DirectMessageChannel $dmc) use ($client,$player,$game) {
-                    $client->send("Your role is {$player->role}", $dmc);
+                    $client->send("Vous êtes {$player->role}", $dmc);
 
                     if ($player->role == Role::WEREWOLF) {
                         if ($game->getNumRole(Role::WEREWOLF) > 1) {
                             $werewolves = PlayerListFormatter::format($game->getPlayersOfRole(Role::WEREWOLF));
-                            $client->send("The werewolves are: {$werewolves}", $dmc);
+                            $client->send("Les Loups-Garous sont : {$werewolves}", $dmc);
                         } else {
-                            $client->send("You are the only werewolf.", $dmc);
+                            $client->send("Vous êtes le seul Loup-Garou.", $dmc);
                         }
                     }
 
                     if ($player->role == Role::SEER) {
-                        $client->send("Seer, select a player by saying !see #channel @username.\r\nDO NOT DISCUSS WHAT YOU SEE DURING THE NIGHT, ONLY DISCUSS DURING THE DAY IF YOU ARE NOT DEAD!", $dmc);
+                        $client->send("C'est à votre tour ! Espionnez un joueur en tapant !see #channel @joueur.\r\nNE DITES PAS PENDANT LA NUIT CE QUE VOUS AVEZ VU, PARLEZ UNIQUEMENT PENDANT LE JOUR ET SI VOUS N'ÊTES PAS MORT(E) !", $dmc);
                     }
 
                     if ($player->role == Role::BEHOLDER) {
                         $seers = $game->getPlayersOfRole(Role::SEER);
                         $seers = PlayerListFormatter::format($seers);
 
-                        $client->send("The seer is: {$seers}", $dmc);
+                        $client->send("La Voyante est: {$seers}", $dmc);
                     }
                 });
         }
@@ -355,13 +355,13 @@ class GameManager
         $playerList = PlayerListFormatter::format($game->getLivingPlayers());
         $roleList = RoleListFormatter::format($game->getLivingPlayers());
 
-        $msg = ":wolf: A new game of Werewolf is starting! For a tutorial, type !help.\r\n\r\n";
-        $msg .= "Players: {$playerList}\r\n";
-        $msg .= "Possible Roles: {$game->getRoleStrategy()->getRoleListMsg()}\r\n\r\n";
+        $msg = ":wolf: Une nouvelle partie de Loups-Garous a commencé ! Pour un tutoriel, tapez !help.\r\n\r\n";
+        $msg .= "Joueurs: {$playerList}\r\n";
+        $msg .= "Rôles possibles: {$game->getRoleStrategy()->getRoleListMsg()}\r\n\r\n";
 
         if ($this->optionsManager->getOptionValue(OptionName::role_seer)) {
-            $msg .= ":crescent_moon: :zzz: It is the middle of the night and the village is sleeping.";
-            $msg .= " The game will begin when the Seer chooses someone.";
+            $msg .= ":crescent_moon: :zzz: C'est la nuit, le village dort.";
+            $msg .= " La partie commencera quand la Voyante aura sondé quelqu'un.";
         }
         $this->sendMessageToChannel($game, $msg);
         
@@ -374,16 +374,16 @@ class GameManager
     {
         $remainingPlayers = PlayerListFormatter::format($game->getLivingPlayers());
 
-        $dayBreakMsg = ":sunrise: The sun rises and the villagers awake.\r\n";
-        $dayBreakMsg .= "Remaining Players: {$remainingPlayers}\r\n\r\n";
-        $dayBreakMsg .= "Villagers, find the Werewolves! Type !vote @username to vote to lynch a player.";
+        $dayBreakMsg = ":sunrise: C'est le jour, les villageois se réveillent.\r\n";
+        $dayBreakMsg .= "Joueurs restant : {$remainingPlayers}\r\n\r\n";
+        $dayBreakMsg .= "Villageois, trouvez les Loups-Garous ! Tapez !vote @joueur pour votez le joueur à lyncher.";
         if ($this->optionsManager->getOptionValue(OptionName::changevote))
         {
-            $dayBreakMsg .= "\r\nYou may change your vote at any time before voting closes. Type !vote clear to remove your vote.";
+            $dayBreakMsg .= "\r\nVous pouvez changer votre vote tant que le vote n'est pas fini. Tapez !vote clear pour retirer votre vote.";
         }
         if ($this->optionsManager->getOptionValue(OptionName::no_lynch))
         {
-            $dayBreakMsg .= "\r\nType !vote noone to vote to not lynch anybody today.";
+            $dayBreakMsg .= "\r\Tapez !vote noone pour voter pour que personne ne meure.";
         }
 
         $this->sendMessageToChannel($game, $dayBreakMsg);
@@ -392,12 +392,12 @@ class GameManager
     private function onNight(Game $game)
     {
         $client = $this->client;
-        $nightMsg = ":crescent_moon: :zzz: The sun sets and the villagers go to sleep.";
+        $nightMsg = ":crescent_moon: :zzz: La nuit tombe et tous les villageois vont dormir.";
         $this->sendMessageToChannel($game, $nightMsg);
 
         $wolves = $game->getPlayersOfRole(Role::WEREWOLF);
 
-        $wolfMsg = ":crescent_moon: It is night and it is time to hunt. Type !kill #channel @player to make your choice. ";
+        $wolfMsg = ":crescent_moon: C'est la nuit, et il est temps de dévorer un Villageois ! Tapez !kill #channel @joueur pour faire votre choix. ";
 
         foreach ($wolves as $wolf)
         {
@@ -407,7 +407,7 @@ class GameManager
                   });
         }
 
-        $seerMsg = ":mag_right: Seer, select a player by saying !see #channel @username.";
+        $seerMsg = ":mag_right: Voyante, sondez un joueur en tapant !see #channel @joueur.";
 
         $seers = $game->getPlayersOfRole(Role::SEER);
 
@@ -419,7 +419,7 @@ class GameManager
                  });
         }
 
-        $bodyGuardMsg = ":muscle: Bodyguard, you may guard someone once per night. That player cannot be eliminated. Type !guard #channel @user";
+        $bodyGuardMsg = ":muscle: Salvateur, vous pouvez chaque nuit protéger un joueur de l'attaque des Loups-Garous. Tapez !guard #channel @joueur";
 
         $bodyguards = $game->getPlayersOfRole(Role::BODYGUARD);
 
@@ -439,9 +439,9 @@ class GameManager
             $player = $game->getPlayerById($lynch_id);
 
             if ($lynch_id == $game->getGuardedUserId()) {
-                $killMsg = ":muscle: @{$player->getUsername()} was protected from being killed during the night.";
+                $killMsg = ":muscle: @{$player->getUsername()} a été protégé par le Salvateur de l'attaque des Loups-Garous.";
             } else {
-                $killMsg = ":skull_and_crossbones: @{$player->getUsername()} ($player->role) was killed during the night.";
+                $killMsg = ":skull_and_crossbones: @{$player->getUsername()} ($player->role) a été tué pendant la nuit.";
                 $game->killPlayer($lynch_id);
             }
 
