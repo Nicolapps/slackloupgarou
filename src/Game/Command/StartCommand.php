@@ -12,7 +12,7 @@ class StartCommand extends Command
     public function init()
     {
         if ($this->channel[0] == 'D') {
-            throw new Exception("Can't start a game by direct message.");
+            throw new Exception("Impossible de démarrer une partie par message privé.");
         }
     }
 
@@ -32,13 +32,13 @@ class StartCommand extends Command
                 $loadPlayers = false;
                 if (count($this->args) > 0 && count($game->getLobbyPlayers(0)) > 0) {
                     $this->client->getChannelGroupOrDMByID($this->channel)->then(function (ChannelInterface $channel) use ($client) {
-                        $client->send('A game lobby is open, you must !end the current game before starting a new one specifying players.', $channel);
+                        $client->send('Un lobby de jeu est ouvert, vous devez !end la partie actuelle avant d\'en commencer une nouvelle.', $channel);
                     });
                     return;
                 }
             } else {
                 $this->client->getChannelGroupOrDMByID($this->channel)->then(function (ChannelInterface $channel) use ($client) {
-                    $client->send('A game is already in progress.', $channel);
+                    $client->send('Un jeu est déjà en cours', $channel);
                 });
                 return;
             }
@@ -56,7 +56,7 @@ class StartCommand extends Command
                     if(count($users) < 3) {
                         $this->client->getChannelGroupOrDMByID($this->channel)
                             ->then(function (ChannelInterface $channel) use ($client) {
-                                $client->send("Cannot start a game with less than 3 players.", $channel);
+                                $client->send("Impossible de commencer une partie avec moins de trois joueurs.", $channel);
                             });
                         return;
                     }
